@@ -23,11 +23,12 @@ function pAequorFactory(num=count, dna=mockUpStrand()){
     compareDNA(another){
       let match = 0;
       for(let x =0;x<this.dna.length;x++){
-        if(this.dna[x]==another.dna){
+        console.log(this.dna[x], another.dna[x])
+        if(this.dna[x]==another.dna[x]){
           match++;
         }
-        return `specimen #${this.specimenNum} and speciment#${another.specimenNum} have ${Math.floor((match/this.dna.length)*10)}% in common`;
       }
+      return `specimen #${this.specimenNum} and specimen #${another.specimenNum} have ${Math.floor((match/this.dna.length)*100)}% in common`;
     },
     mutate(){
       let x = Math.floor(Math.random()*this.dna.length);
@@ -72,5 +73,4 @@ for(let x =0;x<30;x++){
   pArray.push(pAequorFactory());
 }
 
-console.log(pArray[5], pArray[6], pArray[7]);
-
+console.log(pArray[10].compareDNA(pArray[2]))
