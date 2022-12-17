@@ -1,0 +1,76 @@
+// Returns a random DNA base
+const returnRandBase = () => {
+  const dnaBases = ['A', 'T', 'C', 'G']
+  return dnaBases[Math.floor(Math.random() * 4)] 
+}
+
+// Returns a random single strand of DNA containing 15 bases
+const mockUpStrand = () => {
+  const newStrand = []
+  for (let i = 0; i < 15; i++) {
+    newStrand.push(returnRandBase())
+  }
+  return newStrand
+}
+let count = 0;
+
+function pAequorFactory(num=count, dna=mockUpStrand()){
+  let newDNA = mockUpStrand();
+  count++;
+  return {
+    specimenNum:num,
+    dna:dna,
+    compareDNA(another){
+      let match = 0;
+      for(let x =0;x<this.dna.length;x++){
+        if(this.dna[x]==another.dna){
+          match++;
+        }
+        return `specimen #${this.specimenNum} and speciment#${another.specimenNum} have ${Math.floor((match/this.dna.length)*10)}% in common`;
+      }
+    },
+    mutate(){
+      let x = Math.floor(Math.random()*this.dna.length);
+      console.log( `number ${x+1}`)
+      switch(this.dna[x]){
+        case 'A':
+          this.dna[x]='T';
+          break;
+        case 'T':
+          this.dna[x]='A';
+          break;
+        case 'C':
+          this.dna[x]='G';
+          break;
+        case 'G':
+          this.dna[x]='C';
+          break;
+      }
+    },
+    willLikelySurvive(){
+      let pair = 0;
+      for(x in this.dna){
+        if(this.dna[x]=='C'||this.dna[x]=='G'){
+          pair++
+        }
+      }
+      return (pair/this.dna.length) > .6;
+    }
+
+  }
+}
+
+
+let b = pAequorFactory();
+console.log(b.dna);
+b.mutate();
+console.log(b.dna);
+console.log(b.willLikelySurvive());
+
+let pArray =[];
+for(let x =0;x<30;x++){
+  pArray.push(pAequorFactory());
+}
+
+console.log(pArray[5], pArray[6], pArray[7]);
+
